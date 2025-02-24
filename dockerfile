@@ -1,21 +1,18 @@
-# Usa una imagen oficial de Node.js
-FROM node:18
+FROM node:18-slim
 
-# Configurar el directorio de trabajo en el contenedor
+# Instala Chromium y sus dependencias
+RUN apt-get update && \
+    apt-get install -y chromium && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Copiar package.json y package-lock.json
 COPY package*.json ./
-
-# Instalar dependencias
 RUN npm install
 
-# Copiar el código fuente al contenedor
 COPY . .
 
-# Exponer el puerto (Cloud Run asigna un puerto dinámico)
-ENV PORT=8080
-EXPOSE 8080
+# Configura la variable de entorno para indicar la ruta de Chromium
+ENV CHROME_BIN=/usr/bin/chromium
 
-# Comando para ejecutar el bot
 CMD ["node", "index.js"]
