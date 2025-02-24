@@ -7,9 +7,13 @@ RUN apt-get update && \
 
 WORKDIR /app
 
+# Copia los archivos de dependencias
 COPY package*.json ./
+
+# Instala las dependencias de Node
 RUN npm install
 
+# Copia el resto del código de la aplicación
 COPY . .
 
 # Configura la variable de entorno para indicar la ruta de Chromium
