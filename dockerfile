@@ -1,8 +1,8 @@
 FROM node:18-slim
 
-# Actualiza e instala chromium-browser
+# Instala Chromium y sus dependencias
 RUN apt-get update && \
-    apt-get install -y chromium-browser && \
+    apt-get install -y chromium && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-# Establece la variable con la ruta correcta del binario
-ENV CHROME_BIN=/usr/bin/chromium-browser
+# Configura la variable de entorno para indicar la ruta de Chromium
+ENV CHROME_BIN=/usr/bin/chromium
 
 CMD ["node", "index.js"]

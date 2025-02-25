@@ -5,10 +5,11 @@ import fetch from "node-fetch";
 // Configura Puppeteer para usar el navegador instalado
 const client = new Client({
   puppeteer: {
-    executablePath: process.env.CHROME_BIN || "/usr/bin/chromium-browser",
+    executablePath: process.env.CHROME_BIN || "chromium",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   },
 });
+
 client.on("qr", (qr) => {
   console.log("Escanea este QR con tu WhatsApp:", qr);
   qrcode.generate(qr, { small: true });
